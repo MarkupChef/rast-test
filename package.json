@@ -1,5 +1,5 @@
 {
-  "name": "test-js.loc",
+  "name": "Test JS",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -39,5 +39,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "8.22",
+    "eslint-config-prettier": "8.5",
+    "eslint-plugin-import": "2.26",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "4.6",
+    "prettier": "^2.8.4",
+    "prettier-plugin-organize-imports": "^3.2.2"
   }
 }
