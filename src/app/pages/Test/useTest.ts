@@ -1,19 +1,11 @@
-import { useState } from 'react';
-import { Question as QuestionType, questionList } from '../../data';
-import { shuffleArray } from '../../Utils/shuffleArray';
-
-export interface QuestionState {
-  index: number;
-  questionsList: QuestionType[];
-  checked: boolean;
-}
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Question as QuestionType } from '../../data';
+import GlobalContext from '../../hooks/useGlobalContext';
 
 const useTest = () => {
-  const [questions, setQuestions] = useState<QuestionState>({
-    index: 0,
-    questionsList: shuffleArray(questionList),
-    checked: false,
-  });
+  const navigate = useNavigate();
+  const { questions, setQuestions } = useContext(GlobalContext);
 
   console.log('questions', questions);
 
@@ -50,7 +42,6 @@ const useTest = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const i = questions.index;
 
     if (i < questions.questionsList.length - 1) {
@@ -58,6 +49,8 @@ const useTest = () => {
         ...questions,
         index: i + 1,
       });
+    } else {
+      navigate('/result');
     }
   };
 
