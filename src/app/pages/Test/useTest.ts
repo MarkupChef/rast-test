@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { QUESTIONS_STORE } from '../../constants';
 import { Question as QuestionType } from '../../data';
 import GlobalContext from '../../hooks/useGlobalContext';
 
@@ -23,20 +24,27 @@ const useTest = () => {
       return item;
     });
 
-    setQuestions({
+    const q = {
       ...questions,
       questionsList: [...newArr],
-    });
+    };
+
+    setQuestions(q);
+
+    localStorage.setItem(QUESTIONS_STORE, JSON.stringify(q));
   };
 
   const handlePrev = () => {
     const i = questions.index;
 
     if (i > 0) {
-      setQuestions({
+      const q = {
         ...questions,
         index: i - 1,
-      });
+      };
+      setQuestions(q);
+
+      localStorage.setItem(QUESTIONS_STORE, JSON.stringify(q));
     }
   };
 
@@ -45,10 +53,14 @@ const useTest = () => {
     const i = questions.index;
 
     if (i < questions.questionsList.length - 1) {
-      setQuestions({
+      const q = {
         ...questions,
         index: i + 1,
-      });
+      };
+
+      setQuestions(q);
+
+      localStorage.setItem(QUESTIONS_STORE, JSON.stringify(q));
     } else {
       navigate('/result');
     }
