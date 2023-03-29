@@ -4,13 +4,13 @@ import GlobalContext from '../../hooks/useGlobalContext';
 
 const Result = () => {
   const navigate = useNavigate();
-  const { questions } = useContext(GlobalContext);
+  const { questions, restart } = useContext(GlobalContext);
 
   useEffect(() => {
     if (questions.index !== questions.questionsList.length - 1) {
       navigate('/test');
     }
-  }, []);
+  }, [questions]);
 
   return (
     <div>
@@ -39,6 +39,10 @@ const Result = () => {
           })}
         </ul>
       }
+
+      <button type={'button'} onClick={restart}>
+        Restart
+      </button>
     </div>
   );
 };

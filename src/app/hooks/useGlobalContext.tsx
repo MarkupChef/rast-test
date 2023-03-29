@@ -11,6 +11,7 @@ export interface QuestionState {
 interface UseGlobalContext {
   questions: QuestionState;
   setQuestions: React.Dispatch<SetStateAction<QuestionState>>;
+  restart: () => void;
 }
 
 export const GlobalContextProvider = (props: any) => {
@@ -20,9 +21,18 @@ export const GlobalContextProvider = (props: any) => {
     checked: false,
   });
 
+  const restart = () => {
+    setQuestions({
+      index: 0,
+      questionsList: shuffleArray(questionList),
+      checked: false,
+    });
+  };
+
   const contextValue = {
     questions,
     setQuestions,
+    restart,
   };
 
   return <GlobalContext.Provider value={contextValue}>{props.children}</GlobalContext.Provider>;
@@ -35,6 +45,7 @@ export const GlobalContext = createContext<UseGlobalContext>({
     checked: false,
   },
   setQuestions: () => {},
+  restart: () => {},
 });
 
 export default GlobalContext;
