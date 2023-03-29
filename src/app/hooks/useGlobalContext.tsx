@@ -5,7 +5,6 @@ import { shuffleArray } from '../Utils/shuffleArray';
 export interface QuestionState {
   index: number;
   questionsList: QuestionType[];
-  checked: boolean;
 }
 
 interface UseGlobalContext {
@@ -18,14 +17,12 @@ export const GlobalContextProvider = (props: any) => {
   const [questions, setQuestions] = useState<QuestionState>({
     index: 0,
     questionsList: shuffleArray(questionList),
-    checked: false,
   });
 
   const restart = () => {
     setQuestions({
       index: 0,
       questionsList: shuffleArray(questionList),
-      checked: false,
     });
   };
 
@@ -42,7 +39,6 @@ export const GlobalContext = createContext<UseGlobalContext>({
   questions: {
     index: 0,
     questionsList: [],
-    checked: false,
   },
   setQuestions: () => {},
   restart: () => {},
