@@ -13,6 +13,7 @@ const Question: FC<QuestionProps> = ({ title, options, checked, setAnswer }) => 
   return (
     <div>
       <h2>{title}</h2>
+      <p>Choose correct answer:</p>
       <ul>
         {options.map((opt, i) => (
           <li key={`answer-${i}`}>

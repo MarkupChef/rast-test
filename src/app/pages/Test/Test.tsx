@@ -1,16 +1,17 @@
+import { useContext } from 'react';
 import Counter from '../../components/Counter';
 import Question from '../../components/Question';
+import GlobalContext from '../../hooks/useGlobalContext';
 import useTest from './useTest';
 
 const Test = () => {
   const { question, setAnswer, handlePrev, handleSubmit } = useTest();
+  const { restart } = useContext(GlobalContext);
 
   return (
     <div>
       <h1>Test</h1>
       <Counter />
-
-      <p>Choose correct answer:</p>
 
       <form onSubmit={handleSubmit}>
         <Question
@@ -23,6 +24,10 @@ const Test = () => {
           Prev
         </button>
         <button type={'submit'}>Next</button>
+        <br />
+        <button type={'button'} onClick={restart}>
+          Restart
+        </button>
       </form>
     </div>
   );
