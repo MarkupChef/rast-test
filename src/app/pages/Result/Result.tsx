@@ -1,5 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Counter from '../../components/Counter';
 import GlobalContext from '../../hooks/useGlobalContext';
 
 const Result = () => {
@@ -15,6 +16,7 @@ const Result = () => {
   return (
     <div>
       <h1>Result</h1>
+      <Counter result />
       {
         <ul>
           {questions.questionsList.map((question, index) => {

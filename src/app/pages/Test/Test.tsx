@@ -1,13 +1,16 @@
+import Counter from '../../components/Counter';
 import Question from '../../components/Question';
 import useTest from './useTest';
 
 const Test = () => {
-  const { question, questions, setAnswer, handlePrev, handleSubmit } = useTest();
+  const { question, setAnswer, handlePrev, handleSubmit } = useTest();
 
   return (
     <div>
       <h1>Test</h1>
-      <p>Choose correct answer: {questions.index}</p>
+      <Counter />
+
+      <p>Choose correct answer:</p>
 
       <form onSubmit={handleSubmit}>
         <Question
