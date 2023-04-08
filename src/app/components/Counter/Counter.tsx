@@ -13,10 +13,10 @@ const Counter: FC<CounterProps> = ({ result = false }) => {
     : questions.index + 1;
 
   return (
-    <div>
+    <>
       {result && <span>Correct answers: </span>}
       {leftNum} / {questions.questionsList.length}
-    </div>
+    </>
   );
 };
 

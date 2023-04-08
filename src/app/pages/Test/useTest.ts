@@ -5,7 +5,7 @@ import GlobalContext from '../../hooks/useGlobalContext';
 
 const useTest = () => {
   const navigate = useNavigate();
-  const { questions, setQuestions } = useContext(GlobalContext);
+  const { questions, setQuestions, restart } = useContext(GlobalContext);
 
   console.log('questions', questions);
 
@@ -60,6 +60,7 @@ const useTest = () => {
     setAnswer,
     handlePrev,
     handleSubmit,
+    restart,
   };
 };
 

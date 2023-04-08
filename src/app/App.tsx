@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import './App.css';
+import Layout from './components/Layout';
 import { GlobalContextProvider } from './hooks/useGlobalContext';
 import Home from './pages/Home';
 import Result from './pages/Result/Result';
@@ -10,9 +10,11 @@ function App() {
     <GlobalContextProvider>
       <BrowserRouter>
         <Routes>
-          <Route path={'/'} element={<Home />} />
-          <Route path={'/test'} element={<Test />} />
-          <Route path={'/result'} element={<Result />} />
+          <Route element={<Layout />}>
+            <Route path={'/'} element={<Home />} />
+            <Route path={'/test'} element={<Test />} />
+            <Route path={'/result'} element={<Result />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </GlobalContextProvider>
