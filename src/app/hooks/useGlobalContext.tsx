@@ -1,7 +1,7 @@
 import { createContext, SetStateAction, useState } from 'react';
 import { QUESTIONS_STORE } from '../constants';
 import { Question as QuestionType, questionList } from '../data';
-import { shuffleArray } from '../Utils/shuffleArray';
+import { shuffleArray } from '../utils/shuffleArray';
 
 export interface QuestionState {
   index: number;
