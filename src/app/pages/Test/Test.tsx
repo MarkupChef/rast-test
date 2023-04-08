@@ -1,6 +1,8 @@
+
 import Button from '../../components/Button';
 import Counter from '../../components/Counter';
 import Question from '../../components/Question';
+import GlobalContext from '../../hooks/useGlobalContext';
 import useTest from './useTest';
 
 const Test = () => {

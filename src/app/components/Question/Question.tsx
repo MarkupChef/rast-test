@@ -15,11 +15,26 @@ const Question: FC<QuestionProps> = ({ title, options, checked, setAnswer, quest
   console.log('render question');
 
   return (
-    <>
-      <H1>{title}</H1>
+    <div>
+      <h2>{title}</h2>
       <p>Choose correct answer:</p>
-      <AnswerList question={question} />
-    </>
+      <ul>
+        {options.map((opt, i) => (
+          <li key={`answer-${i}`}>
+            <label>
+              <input
+                type="radio"
+                name={'answer'}
+                value={i}
+                checked={i === checked}
+                onChange={(e) => setAnswer(+e.target.value)}
+              />{' '}
+              {opt.toString()}
+            </label>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 

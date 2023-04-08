@@ -1,4 +1,5 @@
 import { createContext, SetStateAction, useState } from 'react';
+import { QUESTIONS_STORE } from '../constants';
 import { Question as QuestionType, questionList } from '../data';
 import { shuffleArray } from '../utils/shuffleArray';
 
@@ -13,17 +14,36 @@ interface UseGlobalContext {
   restart: () => void;
 }
 
-export const GlobalContextProvider = (props: any) => {
-  const [questions, setQuestions] = useState<QuestionState>({
+function getNewQuestions() {
+  return {
     index: 0,
     questionsList: shuffleArray(questionList),
+  };
+}
+
+export const GlobalContextProvider = (props: any) => {
+  const [questions, setQuestions] = useState<QuestionState>(() => {
+    const state = localStorage.getItem(QUESTIONS_STORE);
+
+    if (state) {
+      return JSON.parse(state);
+    }
+
+    return getNewQuestions();
   });
 
+  /*useLayoutEffect(() => {
+    const state = localStorage.getItem(QUESTIONS_STORE);
+
+    if (state) {
+      console.log('store exist');
+      setQuestions(JSON.parse(state));
+    }
+  }, []);*/
+
   const restart = () => {
-    setQuestions({
-      index: 0,
-      questionsList: shuffleArray(questionList),
-    });
+    localStorage.removeItem(QUESTIONS_STORE);
+    setQuestions(getNewQuestions());
   };
 
   const contextValue = {
