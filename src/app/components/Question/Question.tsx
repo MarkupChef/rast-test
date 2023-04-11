@@ -5,36 +5,18 @@ import H1 from '../H1';
 
 interface QuestionProps {
   title: string;
-  options: any[];
-  checked: number;
-  setAnswer: (answer: number) => void;
   question: QuestionType;
 }
 
-const Question: FC<QuestionProps> = ({ title, options, checked, setAnswer, question }) => {
+const Question: FC<QuestionProps> = ({ title, question }) => {
   console.log('render question');
 
   return (
-    <div>
-      <h2>{title}</h2>
+    <>
+      <H1>{title}</H1>
       <p>Choose correct answer:</p>
-      <ul>
-        {options.map((opt, i) => (
-          <li key={`answer-${i}`}>
-            <label>
-              <input
-                type="radio"
-                name={'answer'}
-                value={i}
-                checked={i === checked}
-                onChange={(e) => setAnswer(+e.target.value)}
-              />{' '}
-              {opt.toString()}
-            </label>
-          </li>
-        ))}
-      </ul>
-    </div>
+      <AnswerList question={question} />
+    </>
   );
 };
 
