@@ -31,7 +31,7 @@ const AnswerList: FC<AnswerListProps> = ({ question, result = false }) => {
               )}
             </>
           ) : (
-            <Answer>
+            <Answer checked={i === question.answerUserIndex}>
               <Radio
                 id={`answer-id-${i}`}
                 name={'answer'}

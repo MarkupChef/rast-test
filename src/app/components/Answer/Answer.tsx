@@ -3,10 +3,15 @@ import { FC } from 'react';
 interface AnswerProps {
   correct?: boolean;
   children: any;
+  checked?: boolean;
 }
 
-const Answer: FC<AnswerProps> = ({ correct, children, ...props }) => {
-  const bgColor = correct !== undefined ? (correct ? 'bg-green-200' : 'bg-red-200') : '';
+const Answer: FC<AnswerProps> = ({ correct, children, checked, ...props }) => {
+  let bgColor = correct !== undefined ? (correct ? 'bg-green-200' : 'bg-red-200') : '';
+
+  if (checked) {
+    bgColor = 'bg-white';
+  }
 
   return (
     <div
