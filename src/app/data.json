@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "expression": "1 + \"2\"",
+    "answerIndex": 1,
+    "answerUserIndex": 0,
+    "options": [
+      3,
+      "\"12\"",
+      "NaN",
+      false
+    ]
+  },
+  {
+    "id": 2,
+    "expression": "true + true",
+    "answerIndex": 0,
+    "answerUserIndex": 0,
+    "options": [
+      2,
+      true,
+      "\"2\"",
+      false
+    ]
+  },
+  {
+    "id": 3,
+    "expression": "true + \"true\"",
+    "answerIndex": 1,
+    "answerUserIndex": 0,
+    "options": [
+      "\"true\"",
+      "\"truetrue\"",
+      2,
+      true
+    ]
+  }
+]

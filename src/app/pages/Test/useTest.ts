@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { QUESTIONS_STORE } from '../../constants';
 import { Question as QuestionType } from '../../data';
@@ -6,11 +6,43 @@ import GlobalContext from '../../hooks/useGlobalContext';
 
 const useTest = () => {
   const navigate = useNavigate();
-  const { questions, setQuestions, restart } = useContext(GlobalContext);
+  const { questions, setQuestions } = useContext(GlobalContext);
 
-  console.log('questions', questions);
+  /*async function getData(): Promise<void> {
+    try {
+      const response = await fetch('./data.json');
+      const data = await response.json();
 
-  const question = questions.questionsList[questions.index];
+      setQuestions({
+        ...questions,
+        index: 0,
+        questionsList: shuffleArray(data),
+      });
+    } catch (Err) {
+      setQuestions({
+        ...questions,
+        error: Err as Error,
+      });
+    }
+  }
+
+  useLayoutEffect(() => {
+    const state = localStorage.getItem(QUESTIONS_STORE);
+
+    if (state) {
+      console.log('effect local store');
+      setQuestions(JSON.parse(state));
+    } else {
+      console.log('effect getData');
+      getData();
+    }
+  }, []);*/
+
+  useEffect(() => {
+    if (questions.finished) {
+      navigate('/result');
+    }
+  }, []);
 
   const setAnswer = (answerID: number): void => {
     const i = questions.index;
@@ -62,17 +94,20 @@ const useTest = () => {
 
       localStorage.setItem(QUESTIONS_STORE, JSON.stringify(q));
     } else {
+      setQuestions({
+        ...questions,
+        finished: true,
+      });
       navigate('/result');
     }
   };
 
+  console.log('useTest');
+
   return {
-    questions,
-    question,
     setAnswer,
     handlePrev,
     handleSubmit,
-    restart,
   };
 };
 

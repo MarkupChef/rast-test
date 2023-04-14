@@ -1,16 +1,16 @@
 import { FC } from 'react';
 import { Question } from '../../data';
-import useTest from '../../pages/Test/useTest';
 import Answer from '../Answer';
 import Radio from '../Radio/Radio';
 
 interface AnswerListProps {
   question: Question;
   result?: boolean;
+  setAnswer: (answerID: number) => void;
 }
 
-const AnswerList: FC<AnswerListProps> = ({ question, result = false }) => {
-  const { setAnswer } = useTest();
+const AnswerList: FC<AnswerListProps> = ({ question, setAnswer, result = false }) => {
+  console.log('AnswerList');
 
   return (
     <ul className={'w-40 mx-auto'}>
@@ -20,14 +20,16 @@ const AnswerList: FC<AnswerListProps> = ({ question, result = false }) => {
             <>
               {i === question.answerIndex ? (
                 <Answer correct>
-                  <span>{opt.toString()}</span>
+                  <div className={'py-3'}>{opt.toString()}</div>
                 </Answer>
               ) : i === question.answerUserIndex && question.answerUserIndex !== question.answerIndex ? (
                 <Answer correct={false}>
-                  <span>{opt.toString()}</span>
+                  <div className={'py-3'}>{opt.toString()}</div>
                 </Answer>
               ) : (
-                <Answer>{opt.toString()}</Answer>
+                <Answer>
+                  <div className={'py-3'}>{opt.toString()}</div>
+                </Answer>
               )}
             </>
           ) : (

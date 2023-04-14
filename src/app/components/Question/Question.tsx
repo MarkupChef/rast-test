@@ -6,16 +6,17 @@ import H1 from '../H1';
 interface QuestionProps {
   title: string;
   question: QuestionType;
+  setAnswer: (answerID: number) => void;
 }
 
-const Question: FC<QuestionProps> = ({ title, question }) => {
+const Question: FC<QuestionProps> = ({ title, question, setAnswer }) => {
   console.log('render question');
 
   return (
     <>
       <H1>{title}</H1>
       <p>Choose correct answer:</p>
-      <AnswerList question={question} />
+      <AnswerList question={question} setAnswer={setAnswer} />
     </>
   );
 };

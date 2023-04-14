@@ -1,7 +1,22 @@
-import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import Button from '../../components/Button';
 import H1 from '../../components/H1';
+import { QUESTIONS_STORE } from '../../constants';
+import GlobalContext from '../../hooks/useGlobalContext';
 
 const Home = () => {
+  const { start, questions } = useContext(GlobalContext);
+  const navigate = useNavigate();
+  const handleClick = () => {
+    start();
+    navigate('./test');
+  };
+
+  console.log('home', questions);
+
+  const state = localStorage.getItem(QUESTIONS_STORE);
+
   return (
     <div>
       <H1>Welcome to test</H1>
@@ -10,12 +25,20 @@ const Home = () => {
         explicabo libero magni nam necessitatibus omnis perferendis reiciendis, sapiente, sint soluta totam veritatis
         vitae!
       </p>
-      <Link
-        to={'/test'}
-        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-      >
-        Start
-      </Link>
+      <Button onClick={handleClick}>Start</Button>
+      {state && (
+        <div>
+          {questions.finished ? (
+            <Link to={'./result'} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+              Back to results
+            </Link>
+          ) : (
+            <Link to={'./test'} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+              Continue
+            </Link>
+          )}
+        </div>
+      )}
     </div>
   );
 };
