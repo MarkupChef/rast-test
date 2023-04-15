@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AnswerList from '../../components/AnswerList';
 import Button from '../../components/Button';
 import Counter from '../../components/Counter';
@@ -8,7 +8,7 @@ import GlobalContext from '../../hooks/useGlobalContext';
 
 const Result = () => {
   const navigate = useNavigate();
-  const { questions, restart } = useContext(GlobalContext);
+  const { questions, start } = useContext(GlobalContext);
 
   useEffect(() => {
     if (questions.index !== questions.questionsList.length - 1) {
@@ -31,7 +31,7 @@ const Result = () => {
                   <h4 className={'font-bold mb-2'}>
                     {index + 1}) {question.expression}
                   </h4>
-                  <AnswerList question={question} result />
+                  <AnswerList question={question} result setAnswer={() => {}} />
                 </li>
               );
             })}
@@ -39,7 +39,12 @@ const Result = () => {
         </>
       }
 
-      <Button onClick={restart}>Restart</Button>
+      <Button onClick={start}>Restart</Button>
+      <div>
+        <Link to={'/'} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+          Home
+        </Link>
+      </div>
     </div>
   );
 };
