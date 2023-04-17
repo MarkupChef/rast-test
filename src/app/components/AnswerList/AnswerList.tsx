@@ -1,21 +1,24 @@
 import { FC } from 'react';
+import { useDispatch } from 'react-redux';
 import { Question } from '../../data';
+import { setAnswer } from '../../store/slice';
 import Answer from '../Answer';
 import Radio from '../Radio/Radio';
 
 interface AnswerListProps {
   question: Question;
   result?: boolean;
-  setAnswer: (answerID: number) => void;
 }
 
-const AnswerList: FC<AnswerListProps> = ({ question, setAnswer, result = false }) => {
+const AnswerList: FC<AnswerListProps> = ({ question, result = false }) => {
+  const dispatch = useDispatch();
+
   console.log('AnswerList');
 
   return (
     <ul className={'w-40 mx-auto'}>
       {question.options.map((opt, i) => (
-        <li key={i} className={'mb-2 last:mb-0'}>
+        <li key={`answer-id-${i}`} className={'mb-2 last:mb-0'}>
           {result ? (
             <>
               {i === question.answerIndex ? (
@@ -40,7 +43,7 @@ const AnswerList: FC<AnswerListProps> = ({ question, setAnswer, result = false }
                 label={opt.toString()}
                 value={i}
                 checked={i === question.answerUserIndex}
-                onChange={(e) => setAnswer(+e.target.value)}
+                onChange={(e) => dispatch(setAnswer({ answerIndex: +e.target.value }))}
               />
             </Answer>
           )}

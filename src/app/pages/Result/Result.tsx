@@ -1,20 +1,34 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import AnswerList from '../../components/AnswerList';
 import Button from '../../components/Button';
 import Counter from '../../components/Counter';
 import H1 from '../../components/H1';
-import GlobalContext from '../../hooks/useGlobalContext';
+import { RootState } from '../../store';
+import { start } from '../../store/slice';
 
 const Result = () => {
   const navigate = useNavigate();
-  const { questions, start } = useContext(GlobalContext);
+  const dispatch = useDispatch();
+  const restart = () => dispatch(start());
+
+  const { questions, started, finished } = useSelector((state: RootState) => state.test);
 
   useEffect(() => {
-    if (questions.index !== questions.questionsList.length - 1) {
-      navigate('/test');
+    if (!finished) {
+      if (started) {
+        navigate('/test');
+      } else {
+        navigate('/', { replace: true });
+      }
     }
-  }, [questions]);
+  }, []);
+
+  const handleRestart = () => {
+    restart();
+    navigate('/test');
+  };
 
   return (
     <div>
@@ -25,13 +39,13 @@ const Result = () => {
       {
         <>
           <ul className={'flex flex-wrap justify-center gap-8 mb-6'}>
-            {questions.questionsList.map((question, index) => {
+            {questions.map((question, i) => {
               return (
-                <li key={index}>
+                <li key={i}>
                   <h4 className={'font-bold mb-2'}>
-                    {index + 1}) {question.expression}
+                    {++i}) {question.expression}
                   </h4>
-                  <AnswerList question={question} result setAnswer={() => {}} />
+                  <AnswerList question={question} result />
                 </li>
               );
             })}
@@ -39,7 +53,7 @@ const Result = () => {
         </>
       }
 
-      <Button onClick={start}>Restart</Button>
+      <Button onClick={handleRestart}>Restart</Button>
       <div>
         <Link to={'/'} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
           Home

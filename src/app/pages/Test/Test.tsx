@@ -1,22 +1,45 @@
-import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import Counter from '../../components/Counter';
 import Question from '../../components/Question';
-import GlobalContext from '../../hooks/useGlobalContext';
-import useTest from './useTest';
+import { RootState } from '../../store';
+import { nextQuestion, prevQuestion, start } from '../../store/slice';
 
 const Test = () => {
-  const { questions, start } = useContext(GlobalContext);
-  const { setAnswer, handlePrev, handleSubmit } = useTest();
+  const navigate = useNavigate();
 
-  const question = questions.questionsList[questions.index];
+  const dispatch = useDispatch();
+  const next = () => dispatch(nextQuestion());
+  const prev = () => dispatch(prevQuestion());
+  const restart = () => dispatch(start());
 
-  console.log('render Test', questions);
+  const { index, questions, error, finished } = useSelector((state: RootState) => state.test);
+  const question = questions.length && questions[index];
+
+  useEffect(() => {
+    if (!question) {
+      navigate('/');
+    }
+  }, []);
+
+  useEffect(() => {
+    if (finished) {
+      navigate('/result');
+    }
+  }, [finished]);
+
+  const handleNext = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    next();
+  };
+
+  console.log('render Test');
 
   return (
     <>
-      {questions.error ? (
+      {error ? (
         <>
           <h2 className={'mb-2'}>Error load questions</h2>
           <Link to={'/'} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
@@ -26,17 +49,18 @@ const Test = () => {
       ) : question ? (
         <div>
           <Counter />
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleNext}>
             <div className={'mb-6'}>
-              <Question title={question.expression} question={question} setAnswer={setAnswer} />
+              <Question title={question.expression} question={question} />
             </div>
-            `{questions.index > 0 && <Button onClick={handlePrev}>Prev</Button>}
+            `{index > 0 && <Button onClick={prev}>Prev</Button>}
             <Button type={'submit'}>Next</Button>
-            <div
-              className={'font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer'}
-              onClick={start}
-            >
-              Restart
+            <br />
+            <Button onClick={restart}>Restart</Button>
+            <div>
+              <Link to={'/'} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                Home
+              </Link>
             </div>
           </form>
         </div>
