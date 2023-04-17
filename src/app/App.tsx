@@ -1,13 +1,14 @@
+import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
-import { GlobalContextProvider } from './hooks/useGlobalContext';
 import Home from './pages/Home';
 import Result from './pages/Result/Result';
 import Test from './pages/Test';
+import store from './store/index';
 
 function App() {
   return (
-    <GlobalContextProvider>
+    <Provider store={store}>
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
@@ -17,7 +18,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </GlobalContextProvider>
+    </Provider>
   );
 }
 
