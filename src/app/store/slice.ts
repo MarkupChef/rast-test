@@ -1,14 +1,30 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { QUESTIONS_STORE } from '../constants';
 import { Question } from '../data';
+import { shuffleArray } from '../utils/shuffleArray';
 
 export interface InitialState {
   index: number;
   questions: Question[];
-  error: boolean;
   started: boolean;
   finished: boolean;
+  status: null | 'loading' | 'finished' | 'error';
+  error: null | Error;
 }
+
+export const fetchQuestions = createAsyncThunk('test/fetchQuestions', async function (_, { rejectWithValue }) {
+  try {
+    const response = await fetch('./data.json');
+
+    if (!response.ok) {
+      throw new Error('ErrorServer');
+    }
+
+    return (await response.json()) as Question[];
+  } catch (error) {
+    return rejectWithValue((error as Error).message);
+  }
+});
 
 const localStore = localStorage.getItem(QUESTIONS_STORE);
 
@@ -17,9 +33,10 @@ const initialState: InitialState = localStore
   : {
       index: 0,
       questions: [],
-      error: false,
       started: false,
       finished: false,
+      status: null,
+      error: null,
     };
 
 const testSlice = createSlice({
@@ -28,27 +45,18 @@ const testSlice = createSlice({
   reducers: {
     start(state) {
       state.index = 0;
-      state.questions = [
-        { id: 1, expression: '1 + "2"', answerIndex: 1, answerUserIndex: 0, options: [3, '"12"', 'NaN', false] },
-        { id: 2, expression: 'true + true', answerIndex: 0, answerUserIndex: 0, options: [2, true, '"2"', false] },
-        {
-          id: 3,
-          expression: 'true + "true"',
-          answerIndex: 1,
-          answerUserIndex: 0,
-          options: ['"true"', '"truetrue"', 2, true],
-        },
-      ];
+      state.questions = [];
       state.started = true;
       state.finished = false;
-      state.error = false;
+      state.error = null;
 
-      localStorage.setItem(QUESTIONS_STORE, JSON.stringify(state));
+      localStorage.removeItem(QUESTIONS_STORE);
     },
     setAnswer(state, action) {
       state.questions[state.index].answerUserIndex = action.payload.answerIndex;
       localStorage.setItem(QUESTIONS_STORE, JSON.stringify(state));
     },
+
     nextQuestion(state) {
       if (state.index === state.questions.length - 1) {
         state.started = false;
@@ -58,10 +66,33 @@ const testSlice = createSlice({
       }
       localStorage.setItem(QUESTIONS_STORE, JSON.stringify(state));
     },
+
     prevQuestion(state) {
       state.index = state.index > 0 ? state.index - 1 : state.index;
       localStorage.setItem(QUESTIONS_STORE, JSON.stringify(state));
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchQuestions.pending, (state) => {
+      state.status = 'loading';
+      state.error = null;
+    });
+
+    builder.addCase(fetchQuestions.fulfilled, (state, actions) => {
+      state.status = 'finished';
+      state.index = 0;
+      state.questions = shuffleArray(actions.payload);
+      state.started = true;
+      state.finished = false;
+      state.error = null;
+
+      localStorage.setItem(QUESTIONS_STORE, JSON.stringify(state));
+    });
+
+    builder.addCase(fetchQuestions.rejected, (state, actions) => {
+      state.status = 'error';
+      state.error = actions.payload as Error;
+    });
   },
 });
 

@@ -2,12 +2,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import H1 from '../../components/H1';
-import { RootState } from '../../store';
+import { AppDispatch, RootState } from '../../store';
 import { start } from '../../store/slice';
 
 const Home = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { started, finished } = useSelector((state: RootState) => state.test);
 
   const handleClick = () => {
