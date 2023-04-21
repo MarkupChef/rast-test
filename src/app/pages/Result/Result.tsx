@@ -5,12 +5,12 @@ import AnswerList from '../../components/AnswerList';
 import Button from '../../components/Button';
 import Counter from '../../components/Counter';
 import H1 from '../../components/H1';
-import { RootState } from '../../store';
+import { AppDispatch, RootState } from '../../store';
 import { start } from '../../store/slice';
 
 const Result = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const restart = () => dispatch(start());
 
   const { questions, started, finished } = useSelector((state: RootState) => state.test);

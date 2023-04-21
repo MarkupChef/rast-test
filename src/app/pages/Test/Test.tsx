@@ -4,23 +4,27 @@ import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import Counter from '../../components/Counter';
 import Question from '../../components/Question';
-import { RootState } from '../../store';
-import { nextQuestion, prevQuestion, start } from '../../store/slice';
+import { AppDispatch, RootState } from '../../store';
+import { fetchQuestions, nextQuestion, prevQuestion } from '../../store/slice';
 
 const Test = () => {
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const next = () => dispatch(nextQuestion());
   const prev = () => dispatch(prevQuestion());
-  const restart = () => dispatch(start());
+  const restart = () => dispatch(fetchQuestions());
 
-  const { index, questions, error, finished } = useSelector((state: RootState) => state.test);
+  const { index, questions, status, started, finished, error } = useSelector((state: RootState) => state.test);
   const question = questions.length && questions[index];
 
   useEffect(() => {
-    if (!question) {
+    if (!started) {
       navigate('/');
+    }
+
+    if (started && !question) {
+      dispatch(fetchQuestions());
     }
   }, []);
 
@@ -46,7 +50,7 @@ const Test = () => {
             Home
           </Link>
         </>
-      ) : question ? (
+      ) : status === 'finished' && question ? (
         <div>
           <Counter />
           <form onSubmit={handleNext}>
