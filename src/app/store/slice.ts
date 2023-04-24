@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { QUESTIONS_STORE } from '../constants';
 import { Question } from '../data';
 import { shuffleArray } from '../utils/shuffleArray';
 
@@ -26,18 +25,14 @@ export const fetchQuestions = createAsyncThunk('test/fetchQuestions', async func
   }
 });
 
-const localStore = localStorage.getItem(QUESTIONS_STORE);
-
-const initialState: InitialState = localStore
-  ? JSON.parse(localStore)
-  : {
-      index: 0,
-      questions: [],
-      started: false,
-      finished: false,
-      status: null,
-      error: null,
-    };
+const initialState: InitialState = {
+  index: 0,
+  questions: [],
+  started: false,
+  finished: false,
+  status: null,
+  error: null,
+};
 
 const testSlice = createSlice({
   name: 'test',
@@ -49,12 +44,9 @@ const testSlice = createSlice({
       state.started = true;
       state.finished = false;
       state.error = null;
-
-      localStorage.removeItem(QUESTIONS_STORE);
     },
     setAnswer(state, action) {
       state.questions[state.index].answerUserIndex = action.payload.answerIndex;
-      localStorage.setItem(QUESTIONS_STORE, JSON.stringify(state));
     },
 
     nextQuestion(state) {
@@ -64,12 +56,10 @@ const testSlice = createSlice({
       } else if (state.index < state.questions.length - 1) {
         state.index++;
       }
-      localStorage.setItem(QUESTIONS_STORE, JSON.stringify(state));
     },
 
     prevQuestion(state) {
       state.index = state.index > 0 ? state.index - 1 : state.index;
-      localStorage.setItem(QUESTIONS_STORE, JSON.stringify(state));
     },
   },
   extraReducers: (builder) => {
@@ -85,8 +75,6 @@ const testSlice = createSlice({
       state.started = true;
       state.finished = false;
       state.error = null;
-
-      localStorage.setItem(QUESTIONS_STORE, JSON.stringify(state));
     });
 
     builder.addCase(fetchQuestions.rejected, (state, actions) => {
