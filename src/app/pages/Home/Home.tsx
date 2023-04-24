@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import Button from '../../components/Button';
-import H1 from '../../components/H1';
+import Button from '../../components/UI/Button';
+import H1 from '../../components/UI/H1';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import { RootState } from '../../store';
 import { start } from '../../store/slice';

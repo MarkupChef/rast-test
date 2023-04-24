@@ -15,7 +15,7 @@ const Answer: FC<AnswerProps> = ({ correct, children, checked, ...props }) => {
 
   return (
     <div
-      className={`px-3 border bg-gray-200 rounded border-gray-200 shadow-[rgba(0,_0,_0,_0.15)_0px_3px_5px] ${bgColor}`}
+      className={`px-3 border border-gray-200 dark:border-gray-600 bg-gray-200 dark:bg-gray-900 rounded shadow-[rgba(0,_0,_0,_0.15)_0px_3px_5px] ${bgColor}`}
       {...props}
     >
       {children}

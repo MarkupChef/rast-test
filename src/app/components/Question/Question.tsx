@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Question as QuestionType } from '../../types';
 import AnswerList from '../AnswerList';
-import H1 from '../H1';
+import H1 from '../UI/H1';
 
 interface QuestionProps {
   title: string;

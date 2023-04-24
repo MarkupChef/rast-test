@@ -3,7 +3,7 @@ import useAppDispatch from '../../hooks/useAppDispatch';
 import { setAnswer } from '../../store/slice';
 import { Question } from '../../types';
 import Answer from '../Answer';
-import Radio from '../Radio/Radio';
+import Radio from '../UI/Radio/Radio';
 
 interface AnswerListProps {
   question: Question;

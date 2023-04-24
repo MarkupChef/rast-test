@@ -1,8 +1,8 @@
 import { FC, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Button from '../../components/Button';
 import Counter from '../../components/Counter';
 import Question from '../../components/Question';
+import Button from '../../components/UI/Button';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import { fetchQuestions, nextQuestion, prevQuestion } from '../../store/slice';
@@ -57,7 +57,7 @@ const Test: FC = () => {
             <div className={'mb-6'}>
               <Question title={question.expression} question={question} />
             </div>
-            `{index > 0 && <Button onClick={prev}>Prev</Button>}
+            {index > 0 && <Button onClick={prev}>Prev</Button>}
             <Button type={'submit'}>Next</Button>
             <br />
             <Button onClick={restart}>Restart</Button>
