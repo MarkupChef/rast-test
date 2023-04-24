@@ -1,4 +1,4 @@
-import { Question } from '../data';
+import { Question } from '../types';
 
 export const shuffleArray = (array: Question[]): Question[] => {
   const newArray = [...array];

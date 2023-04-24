@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Question } from '../data';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Question } from '../types';
 import { shuffleArray } from '../utils/shuffleArray';
 
 export interface InitialState {
@@ -11,20 +11,6 @@ export interface InitialState {
   error: null | Error;
 }
 
-export const fetchQuestions = createAsyncThunk('test/fetchQuestions', async function (_, { rejectWithValue }) {
-  try {
-    const response = await fetch('./data.json');
-
-    if (!response.ok) {
-      throw new Error('ErrorServer');
-    }
-
-    return (await response.json()) as Question[];
-  } catch (error) {
-    return rejectWithValue((error as Error).message);
-  }
-});
-
 const initialState: InitialState = {
   index: 0,
   questions: [],
@@ -33,6 +19,23 @@ const initialState: InitialState = {
   status: null,
   error: null,
 };
+
+export const fetchQuestions = createAsyncThunk<Question[], undefined, { rejectValue: string | Error }>(
+  'test/fetchQuestions',
+  async function (_, { rejectWithValue }) {
+    try {
+      const response = await fetch('./data.json');
+
+      if (!response.ok) {
+        throw new Error('ErrorServer');
+      }
+
+      return (await response.json()) as Question[];
+    } catch (error) {
+      return rejectWithValue((error as Error).message);
+    }
+  }
+);
 
 const testSlice = createSlice({
   name: 'test',
@@ -45,7 +48,7 @@ const testSlice = createSlice({
       state.finished = false;
       state.error = null;
     },
-    setAnswer(state, action) {
+    setAnswer(state, action: PayloadAction<{ answerIndex: number }>) {
       state.questions[state.index].answerUserIndex = action.payload.answerIndex;
     },
 

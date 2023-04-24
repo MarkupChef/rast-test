@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { useDispatch } from 'react-redux';
-import { Question } from '../../data';
+import useAppDispatch from '../../hooks/useAppDispatch';
 import { setAnswer } from '../../store/slice';
+import { Question } from '../../types';
 import Answer from '../Answer';
 import Radio from '../Radio/Radio';
 
@@ -11,7 +11,7 @@ interface AnswerListProps {
 }
 
 const AnswerList: FC<AnswerListProps> = ({ question, result = false }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   console.log('AnswerList');
 
