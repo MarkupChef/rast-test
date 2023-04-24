@@ -3,6 +3,7 @@ import { Question } from '../types';
 import { shuffleArray } from '../utils/shuffleArray';
 
 export interface InitialState {
+  darkMode: undefined | boolean;
   index: number;
   questions: Question[];
   started: boolean;
@@ -12,6 +13,7 @@ export interface InitialState {
 }
 
 const initialState: InitialState = {
+  darkMode: undefined,
   index: 0,
   questions: [],
   started: false,
@@ -64,6 +66,10 @@ const testSlice = createSlice({
     prevQuestion(state) {
       state.index = state.index > 0 ? state.index - 1 : state.index;
     },
+
+    switchTheme(state, action: PayloadAction<boolean>) {
+      state.darkMode = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchQuestions.pending, (state) => {
@@ -87,6 +93,6 @@ const testSlice = createSlice({
   },
 });
 
-export const { start, setAnswer, nextQuestion, prevQuestion } = testSlice.actions;
+export const { start, setAnswer, nextQuestion, prevQuestion, switchTheme } = testSlice.actions;
 
 export default testSlice.reducer;

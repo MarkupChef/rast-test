@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AnswerList from '../../components/AnswerList';
-import Button from '../../components/Button';
 import Counter from '../../components/Counter';
-import H1 from '../../components/H1';
+import Button from '../../components/UI/Button';
+import H1 from '../../components/UI/H1';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import { start } from '../../store/slice';
