@@ -1,13 +1,14 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import H1 from '../../components/H1';
-import { AppDispatch, RootState } from '../../store';
+import useAppDispatch from '../../hooks/useAppDispatch';
+import { RootState } from '../../store';
 import { start } from '../../store/slice';
 
 const Home = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const { started, finished } = useSelector((state: RootState) => state.test);
 
   const handleClick = () => {

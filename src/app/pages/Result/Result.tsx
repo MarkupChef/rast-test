@@ -1,19 +1,19 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import AnswerList from '../../components/AnswerList';
 import Button from '../../components/Button';
 import Counter from '../../components/Counter';
 import H1 from '../../components/H1';
-import { AppDispatch, RootState } from '../../store';
+import useAppDispatch from '../../hooks/useAppDispatch';
+import useAppSelector from '../../hooks/useAppSelector';
 import { start } from '../../store/slice';
 
 const Result = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const restart = () => dispatch(start());
 
-  const { questions, started, finished } = useSelector((state: RootState) => state.test);
+  const { questions, started, finished } = useAppSelector((state) => state.test);
 
   useEffect(() => {
     if (!finished) {

@@ -1,21 +1,21 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { FC, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import Counter from '../../components/Counter';
 import Question from '../../components/Question';
-import { AppDispatch, RootState } from '../../store';
+import useAppDispatch from '../../hooks/useAppDispatch';
+import useAppSelector from '../../hooks/useAppSelector';
 import { fetchQuestions, nextQuestion, prevQuestion } from '../../store/slice';
 
-const Test = () => {
+const Test: FC = () => {
   const navigate = useNavigate();
 
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const next = () => dispatch(nextQuestion());
   const prev = () => dispatch(prevQuestion());
   const restart = () => dispatch(fetchQuestions());
 
-  const { index, questions, status, started, finished, error } = useSelector((state: RootState) => state.test);
+  const { index, questions, status, started, finished, error } = useAppSelector((state) => state.test);
   const question = questions.length && questions[index];
 
   useEffect(() => {

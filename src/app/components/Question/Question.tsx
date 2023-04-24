@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Question as QuestionType } from '../../data';
+import { Question as QuestionType } from '../../types';
 import AnswerList from '../AnswerList';
 import H1 from '../H1';
 
