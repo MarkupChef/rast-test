@@ -7,7 +7,8 @@ interface AnswerProps {
 }
 
 const Answer: FC<AnswerProps> = ({ correct, children, checked, ...props }) => {
-  let bgColor = correct !== undefined ? (correct ? 'bg-green-200' : 'bg-red-200') : '';
+  let bgColor =
+    correct !== undefined ? (correct ? 'bg-green-200 dark:bg-green-600' : 'bg-red-200 dark:bg-red-800') : '';
 
   if (checked) {
     bgColor = 'bg-white';

@@ -23,6 +23,14 @@ const ThemeSwitcher = () => {
     } else {
       document.documentElement.classList.remove('dark');
     }
+
+    const st = setTimeout(() => {
+      document.documentElement.classList.add('transition-all');
+    }, 1000);
+
+    return () => {
+      clearTimeout(st);
+    };
   }, [darkMode]);
 
   const handleSwitch = () => {
